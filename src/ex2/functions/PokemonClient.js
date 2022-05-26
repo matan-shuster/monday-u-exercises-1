@@ -2,7 +2,6 @@ export default class PokemonClient{
     // Constructor
     constructor(){
         this.API_BASE = 'https://pokeapi.co/api/v2/';
-        this.SMOGON_API_BASE = 'https://www.smogon.com/dex/ss/pokem';
         }
 
     // Methods
