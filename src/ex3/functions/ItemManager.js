@@ -1,6 +1,5 @@
 import PokemonClient from "./PokemonClient.js";
-
-import {fs} from "fs";
+import fs from "fs";
 export default class ItemManager {
     // Constructor
     constructor() {
@@ -23,49 +22,70 @@ export default class ItemManager {
     async addTodo(todo) {
         const pokemonClient = new PokemonClient();
         if (todo.length === 0) {
-            return alert("Please enter a todo task")
+           console.log("Please enter a todo task");
+           return;
         }
+        this.todoList= this.getTodoList();
         this.splitList = todo.split(",");
         if (this.checkNumbers(this.splitList)) {
             this.splitList = await pokemonClient.getPokemon(this.trimSpaces(this.splitList));
             this.splitList.forEach(element => {
-                this.todoList.push(`${element}`);
+                let todoObject = {
+                    todo: element,
+                    isPokemon: true
+                }
+                this.todoList.push(todoObject);
+                console.log(this.todoList)
             });
+            this.writeToFile();
             return;
+
         }
-        this.todoList.push(todo);
+        let todoObject = {
+            todo: todo,
+            isPokemon: false
+        }
+        this.todoList.push(todoObject);
+        this.writeToFile();
     }
 
-    writeToFile(fileName){
-        let data = this.todoList.join("\n");
-        data.forEach(element => {
-             fs.writeFile(fileName, element, (err) => {
-                if (err) throw err;
-            })
-        });
+
+    writeToFile(){
+        fs.writeFileSync("todo.json", JSON.stringify(this.todoList));
     }
 
 
     getTodoList() {
-        return this.todoList;
-    }
-
-    getHistory() {
-        if (this.history.length === 0) {
-            return alert("History is currently empty")
+        try{
+            let data = fs.readFileSync("todo.json");
+            let list = JSON.parse(data);
+            return list;
         }
-        return this.addTodo(this.history.pop());
+      catch{
+            return [];
+      }
     }
 
-    deleteTodo(todo) {
-        let list = this.todoList;
-        list.forEach(element => {
-            if (element === todo) {
-                this.history.push(element);
-                list.splice(list.indexOf(element), 1);
-            }
-        })
+
+    // getHistory() {
+    //     if (this.history.length === 0) {
+    //         return alert("History is currently empty")
+    //     }
+    //     return this.addTodo(this.history.pop());
+    // }
+
+    deleteTodo(number) {
+        let list = this.getTodoList();
+        list.splice(number, 1);
         this.todoList = list;
+        this.writeToFile();
+    }
+
+    clearTodoList(){
+        this.todoList = [];
+        this.writeToFile();
     }
 }
+
+
 
