@@ -4,7 +4,7 @@ import {convert} from 'html-to-text';
 import fetch from 'node-fetch';
 import chalk from "chalk";
 import { Command } from "commander";
-import {fs} from 'fs';
+import fs from 'fs';
 
 const pokeimg= "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
 const image = `https://process.filestackapi.com/AJWw5n38DQ52lqq0vxGIwz/ascii=size:70/${pokeimg}`;
@@ -18,8 +18,8 @@ async function imageTest() {
 }
 
 function createListFile(){
-    if (!fs.existsSync("./todo.txt")) {
-        fs.writeFileSync("./todo.txt", "");
+    if (!fs.existsSync("./todo.json")) {
+        fs.writeFileSync("./todo.json", JSON.stringify([]));
     }
 
 program
@@ -47,12 +47,30 @@ program
     .description("List all todo tasks")
     .action(() => {
         console.log(chalk.blue(`Todo list:`));
-        let list = itemManager.getTodoList();
-        console.log(list);
+        const list = itemManager.getTodoList();
         list.forEach(element => {
-            console.log(chalk.blue(`${element}`));
+            console.log(chalk.blue(`${element.todo}`));
         })
-        imageTest();
+        // imageTest();
     });
+
+program
+    .command("delete")
+    .alias("d")
+    .description("delete a todo task")
+    .argument("<number>", "Number of task to delete")
+    .action(async (number) => {
+        await itemManager.deleteTodo(number);
+        console.log(chalk.green(`Removed ${number} from the todo list`));
+    })
+
+program
+    .command("clear")
+    .alias("c")
+    .description("Clear all todo tasks")
+    .action(() => {
+        itemManager.clearTodoList();
+        console.log(chalk.green(`Cleared all todo tasks`));
+    })
 
 program.parse();
