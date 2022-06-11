@@ -1,21 +1,14 @@
 import ItemManager from './functions/ItemManager.js';
 
-import {convert} from 'html-to-text';
 import fetch from 'node-fetch';
 import chalk from "chalk";
 import { Command } from "commander";
 import fs from 'fs';
-
-const pokeimg= "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
-const image = `https://process.filestackapi.com/AJWw5n38DQ52lqq0vxGIwz/ascii=size:70/${pokeimg}`;
 const program = new Command();
 const itemManager = new ItemManager();
 
-async function imageTest() {
-    const response = await fetch(image);
-    const data = await response.text();
-    console.log(convert(data));
-}
+
+
 
 function createListFile(){
     if (!fs.existsSync("./todo.json")) {
@@ -51,7 +44,7 @@ program
         list.forEach(element => {
             console.log(chalk.blue(`${element.todo}`));
         })
-        // imageTest();
+        image();
     });
 
 program
@@ -71,6 +64,15 @@ program
     .action(() => {
         itemManager.clearTodoList();
         console.log(chalk.green(`Cleared all todo tasks`));
-    })
+    });
+
+program
+    .command("image")
+    .alias("i")
+    .description("Display an image of a pokemon")
+    .argument("<number>", "Number of task to delete")
+    .action(async (number) => {
+        await itemManager.image(number);
+    });
 
 program.parse();

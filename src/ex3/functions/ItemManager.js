@@ -1,10 +1,12 @@
 import PokemonClient from "./PokemonClient.js";
 import fs from "fs";
+import asciify from "asciify-image";
 export default class ItemManager {
     // Constructor
     constructor() {
         this.todoList = [];
         this.history = [];
+        this.pokemonClient = new PokemonClient();
     }
 
     trimSpaces(splitList) {
@@ -20,7 +22,6 @@ export default class ItemManager {
     }
 
     async addTodo(todo) {
-        const pokemonClient = new PokemonClient();
         if (todo.length === 0) {
            console.log("Please enter a todo task");
            return;
@@ -28,14 +29,15 @@ export default class ItemManager {
         this.todoList= this.getTodoList();
         this.splitList = todo.split(",");
         if (this.checkNumbers(this.splitList)) {
-            this.splitList = await pokemonClient.getPokemon(this.trimSpaces(this.splitList));
+            let pokemonIDArray = this.splitList;
+            this.splitList = await this.pokemonClient.getPokemons(this.trimSpaces(this.splitList));
             this.splitList.forEach(element => {
                 let todoObject = {
                     todo: element,
+                    pokemonID: pokemonIDArray[this.splitList.indexOf(element)],
                     isPokemon: true
                 }
                 this.todoList.push(todoObject);
-                console.log(this.todoList)
             });
             this.writeToFile();
             return;
@@ -67,13 +69,6 @@ export default class ItemManager {
     }
 
 
-    // getHistory() {
-    //     if (this.history.length === 0) {
-    //         return alert("History is currently empty")
-    //     }
-    //     return this.addTodo(this.history.pop());
-    // }
-
     deleteTodo(number) {
         let list = this.getTodoList();
         list.splice(number, 1);
@@ -84,6 +79,12 @@ export default class ItemManager {
     clearTodoList(){
         this.todoList = [];
         this.writeToFile();
+    }
+
+    async image(pokemonID){
+        await asciify(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonID}.png`, {fit:'box', width: '200%', height:'200%'}, (err, res) => {
+            console.log(res);
+        });
     }
 }
 
