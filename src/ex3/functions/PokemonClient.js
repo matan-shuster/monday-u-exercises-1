@@ -22,7 +22,7 @@ export default class PokemonClient{
                     data["types"].forEach(element => {
                         abilityList.push(this.capitalizeFirstLetter(element["type"]["name"]));
                     });
-                    pokemons.push(`Catch ${this.capitalizeFirstLetter(data.name)}! (Types: ${abilityList.join("/")}`);
+                    pokemons.push(`Catch ${this.capitalizeFirstLetter(data.name)}! (Types: ${abilityList.join("/")})`);
                     count++;
                 }))
             } catch (error) {
