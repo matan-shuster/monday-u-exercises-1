@@ -45,7 +45,6 @@ program
         list.forEach(element => {
             console.log(chalk.blue(`${element.todo}`));
         })
-        image();
     });
 
 program
