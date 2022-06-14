@@ -15,6 +15,7 @@ function createListFile(){
         fs.writeFileSync("./todo.json", JSON.stringify([]));
     }
 
+
 program
     .name("todo")
     .description("The todo command line application")

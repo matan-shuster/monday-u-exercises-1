@@ -10,6 +10,7 @@ export default class PokemonClient{
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+
     async getPokemons(pokemonIDArray) {
         let pokemons = [];
         let count = 0;
