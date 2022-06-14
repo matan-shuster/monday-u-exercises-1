@@ -10,11 +10,11 @@ export default class PokemonClient{
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    async getPokemon(pokemonID) {
+    async getPokemons(pokemonIDArray) {
         let pokemons = [];
         let count = 0;
             try {
-                await Promise.all(pokemonID.map(async (id) => {
+                await Promise.all(pokemonIDArray.map(async (id) => {
                     const response = await fetch(`${this.API_BASE}pokemon/${id}`);
                     const data = await response.json();
                     let abilityList = [];
@@ -25,7 +25,7 @@ export default class PokemonClient{
                     count++;
                 }))
             } catch (error) {
-                pokemons.push("Could not find pokemon with ID of " + pokemonID[count]);
+                pokemons.push("Could not find pokemon with ID of " + pokemonIDArray[count]);
             }
         return pokemons;
     }
