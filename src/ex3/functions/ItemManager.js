@@ -7,6 +7,7 @@ export default class ItemManager {
         this.todoList = [];
         this.history = [];
         this.pokemonClient = new PokemonClient();
+        this.todoList = this.getTodoList();
     }
 
     trimSpaces(splitList) {
@@ -26,28 +27,27 @@ export default class ItemManager {
            console.log("Please enter a todo task");
            return;
         }
-        this.todoList= this.getTodoList();
-        this.splitList = todo.split(",");
-        if (this.checkNumbers(this.splitList)) {
-            let pokemonIDArray = this.splitList;
-            this.splitList = await this.pokemonClient.getPokemons(this.trimSpaces(this.splitList));
-            this.splitList.forEach(element => {
+        const splitList = todo.split(",");
+        if (this.checkNumbers(splitList)) {
+            const pokemonIDArray = splitList;
+            const pokemonNameArray = await this.pokemonClient.getPokemons(this.trimSpaces(splitList));
+            pokemonNameArray.forEach(element => {
                 let todoObject = {
                     todo: element,
-                    pokemonID: pokemonIDArray[this.splitList.indexOf(element)],
+                    pokemonID: pokemonIDArray[pokemonNameArray.indexOf(element)],
                     isPokemon: true
                 }
                 this.todoList.push(todoObject);
             });
-            this.writeToFile();
-            return;
 
         }
-        let todoObject = {
-            todo: todo,
-            isPokemon: false
+        else{
+            let todoObject = {
+                todo: todo,
+                isPokemon: false
+            }
+            this.todoList.push(todoObject);
         }
-        this.todoList.push(todoObject);
         this.writeToFile();
     }
 
@@ -60,18 +60,18 @@ export default class ItemManager {
 
     getTodoList() {
         try{
-            let data = fs.readFileSync("todo.json");
-            let list = JSON.parse(data);
+            const data = fs.readFileSync("todo.json");
+            const list = JSON.parse(data);
             return list;
         }
       catch{
-            return [];
+            return "Could not get todoList";
       }
     }
 
 
     deleteTodo(number) {
-        let list = this.getTodoList();
+        const list = this.getTodoList();
         list.splice(number, 1);
         this.todoList = list;
         this.writeToFile();
