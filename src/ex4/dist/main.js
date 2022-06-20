@@ -1,78 +1,102 @@
-
-import ItemManager from "../server/services/item_manager.js";
+import ItemClient from "./clients/item_client.js";
 
 // Implement the `Main` class here
 class Main{
 
-    init() {
-        const itemManager = new ItemManager(document.getElementById("todoList"));
+    constructor() {
+        this.itemClient = new ItemClient();
+    }
 
-        function renderTodoList() {
-            document.getElementById("todoList").innerHTML = "";
-            const todoList = itemManager.getTodoList();
-            todoList.forEach(element => {
-                const li = document.createElement("li");
-                li.id = 'todo' + todoList.indexOf(element);
-                li.innerHTML = `<input type='checkbox' name='selectTodo' class= pl id="checkbox" value="${element}"> ${element} </input>`;
-                const deleteButton = document.createElement("img");
-                deleteButton.src = "./images/delete_icon.svg";
-                deleteButton.className = "deleteButton";
-                deleteButton.addEventListener("click", () => {
-                    deleteTodo(element);
-                });
-                li.appendChild(deleteButton);
-                document.getElementById("todoList").appendChild(li);
-
-            })
-
-        }
-        function getHistory() {
-            itemManager.getHistory();
-            renderTodoList();
-        }
-
-        // need to fix this
-        // function toggleDeleteButton() {
-        //    if(document.querySelectorAll('.pl:checked').length > 0){
-        //        document.getElementById("deleteTodo").hidden = false;
-        //        return
-        //    }
-        //    document.getElementById("deleteTodo").hidden = true;
-        //
-        // }
-        window.addEventListener("keyup", e => {
-            if(e.target.id !== "newTodo"){
-                if (e.ctrlKey && e.key === 'z') {
-                    getHistory();
-                }
-            }})
-
-        async function addTodo() {
-            const todo = document.getElementById("newTodo").value;
-            document.getElementById("newTodo").value = "";
-            await itemManager.addTodo(todo);
-            renderTodoList();
-
-        }
-
-        document.getElementById("addTodo").addEventListener("click", addTodo);
-
-
-        function deleteSelected() {
-            let todos = document.querySelectorAll('.pl:checked');
-            todos.forEach(element => {
-                itemManager.deleteTodo(element.value);
+    toggleLoader(state){
+        document.getElementById("todoList").hidden = state;
+        document.querySelector(".loader").hidden = !state;
+    }
+    toggleTodoList(state){
+        document.getElementById("todoList").hidden = !state;
+    }
+    async renderTodoList() {
+        this.toggleLoader(true);
+        this.toggleTodoList(false);
+        const todoList = await this.itemClient.getTodos();
+        this.toggleLoader(false);
+        this.toggleTodoList(true);
+        document.getElementById("todoList").innerHTML = "";
+        todoList.forEach(element => {
+            const li = document.createElement("li");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.className = "pl";
+            checkbox.value = element.todo;
+            checkbox.name = "selectTodo";
+            checkbox.addEventListener("change", this.toggleDeleteButton.bind(this));
+            li.append(checkbox);
+            li.append(element.todo);
+            li.id = 'todo' + todoList.indexOf(element);
+            const deleteButton = document.createElement("img");
+            deleteButton.src = "./images/delete_icon.svg";
+            deleteButton.className = "deleteButton";
+            deleteButton.addEventListener("click", () => {
+                this.deleteTodo(element.todo);
             });
-            renderTodoList();
+            li.appendChild(deleteButton);
+            document.getElementById("todoList").appendChild(li);
+        })
+        this.toggleDeleteButton();
+    }
+
+    toggleDeleteButton() {
+        if(document.querySelectorAll('.pl:checked').length > 0){
+            document.getElementById("deleteTodo").hidden = false;
+            return
+        }
+        document.getElementById("deleteTodo").hidden = true;
+    }
+    async addTodo() {
+        try{
+            const todo = document.getElementById("newTodo").value;
+            if (todo.length === 0) {
+                alert("Please enter a todo task");
+                return;
+            }
+            document.getElementById("newTodo").value = "";
+            this.toggleLoader(true);
+            await this.itemClient.addTodo(todo);
+            this.toggleLoader(false);
+            await this.renderTodoList();
+        }
+        catch (e){
+            alert(e);
         }
 
-        function deleteTodo(todo) {
-            itemManager.deleteTodo(todo);
-            renderTodoList();
+    }
+
+    async deleteSelected() {
+        let todos = document.querySelectorAll('.pl:checked');
+        for (const element of todos) {
+            await this.itemClient.deleteTodo(element.value);
         }
+        await this.renderTodoList();
+    }
 
-        document.getElementById("deleteTodo").addEventListener("click", deleteSelected);
+    async deleteTodo(todo) {
+       await this.itemClient.deleteTodo(todo);
+       await this.renderTodoList();
+    }
 
+    async clearTodoList() {
+        await this.itemClient.clearTodoList();
+        await this.renderTodoList();
+    }
+
+    init() {
+        this.renderTodoList().catch(e => alert(e));
+
+        document.getElementById("addTodo").addEventListener("click", this.addTodo.bind(this));
+
+        document.getElementById("deleteTodo").addEventListener("click", this.deleteSelected.bind(this));
+
+        document.getElementById("deleteAll").addEventListener("click", this.clearTodoList.bind(this));
+        this.toggleDeleteButton();
     }
 }
 

@@ -1,6 +1,6 @@
 // The Pokemon Client (using axios) goes here
 
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 export default class PokemonClient{
     // Constructor
@@ -19,8 +19,8 @@ export default class PokemonClient{
         let count = 0;
         try {
             await Promise.all(pokemonIDArray.map(async (id) => {
-                const response = await fetch(`${this.API_BASE}pokemon/${id}`);
-                const data = await response.json();
+                const response = await axios.get(`${this.API_BASE}pokemon/${id}`);
+                const data = await response.data;
                 let abilityList = [];
                 data["types"].forEach(element => {
                     abilityList.push(this.capitalizeFirstLetter(element["type"]["name"]));
@@ -29,11 +29,10 @@ export default class PokemonClient{
                 count++;
             }))
         } catch (error) {
+            console.error(error);
             pokemons.push("Could not find pokemon with ID of " + pokemonIDArray[count]);
         }
         return pokemons;
     }
 
 }
-
-module.exports = PokemonClient;
