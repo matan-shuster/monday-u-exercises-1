@@ -1,34 +1,38 @@
-const axios = require("axios")
+// The Pokemon Client (using axios) goes here
 
-class PokemonClient {
-    constructor() {
-        this.API_URL = 'https://pokeapi.co/api/v2/pokemon/'
+import axios from 'axios';
+
+export default class PokemonClient{
+    // Constructor
+    constructor(){
+        this.API_BASE = 'https://pokeapi.co/api/v2/';
     }
 
-    async getPokemon(id) {
+    // Methods
+    capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+
+    async getPokemons(pokemonIDArray) {
+        let pokemons = [];
+        let count = 0;
         try {
-            const response = await axios.get(`${this.API_URL}${id}`)
-            const pokemon = response.data
-
-            return pokemon
+            await Promise.all(pokemonIDArray.map(async (id) => {
+                const response = await axios.get(`${this.API_BASE}pokemon/${id}`);
+                const data = await response.data;
+                let abilityList = [];
+                data["types"].forEach(element => {
+                    abilityList.push(this.capitalizeFirstLetter(element["type"]["name"]));
+                });
+                pokemons.push(`Catch ${this.capitalizeFirstLetter(data.name)}! (Types: ${abilityList.join("/")})`);
+                count++;
+            }))
         } catch (error) {
-            console.error(error)
-            throw new Error("Failed to fetch pokemon")
+            console.error(error);
+            pokemons.push("Could not find pokemon with ID of " + pokemonIDArray[count]);
         }
+        return pokemons;
     }
 
-    async getManyPokemon(ids) {
-        try {
-            const promises = ids.map(id => axios.get(`${this.API_URL}${id}`))
-            const responses = await Promise.all(promises)
-
-            const pokemons = responses.map(r => r.data)
-            return pokemons
-        } catch (error) {
-            console.error(error)
-            throw new Error("Failed to fetch pokemon")
-        }
-    }
 }
-
-module.exports = PokemonClient

@@ -1,21 +1,23 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const api = require('./server/routes/api');
+// Express boilerplate, hosting the `dist` file, connecting to the routes
 
-const main = async () => {
+import express from "express";
+import router from "./server/routes/api.js";
+import bodyParser from "body-parser";
+const port = 8000;
+const app = express();
 
-  const app = express();
 
-  app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static("dist"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/', router);
 
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
+app.get('/', (req, res) => {
+  res.status(200).json({
+    health: 'OK'
+  })
+});
 
-  app.use('/', api);
-
-  const port = process.env.PORT || '3042';
-  app.listen(port, function () { console.log('Running on ' + port); });
-};
-
-main();
+app.listen(port, () => {
+  console.log("Server started on port", port);
+});

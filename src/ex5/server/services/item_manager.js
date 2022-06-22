@@ -1,53 +1,86 @@
-const PokemonClient = require('../clients/pokemon_client')
+// The ItemManager should go here. Remember that you have to export it.
 
-class ItemManager {
+import {readFileSync, writeFileSync} from "fs";
+import {Todo} from "../db/models/";
+
+import PokemonClient from "../clients/pokemon_client.js";
+
+export default class ItemManager {
+    // Constructor
     constructor() {
+        this.history = [];
         this.pokemonClient = new PokemonClient();
-        this.items = []; //TODO: remove, items should be stored to DB using Item sequelize model
+        this.todoList = this.getTodoList() || [];
     }
 
-    getItems = () => this.items
-
-    handleItem = async item => {
-        if (this._isNumber(item)) { return await this.fetchAndAddPokemon(item); }
-        if (this._isList(item)) { return await this.fetchAndAddManyPokemon(item); }
-
-        this.addItem(item)
+    trimSpaces(splitList) {
+        const regex = /\s/g;
+        let cleanList = splitList.map(element => element.replace(regex, ""));
+        return cleanList;
     }
 
-    addItem = item => {
-        this.items.push(item);
+    checkNumbers(splitList) {
+        const regex = /^\d+$/;
+        return this.trimSpaces(splitList).every(element => regex.test(element));
+
     }
 
-    addPokemonItem = pokemon => {
-        this.addItem(`Catch ${pokemon.name}`);
-    }
-
-    fetchAndAddPokemon = async pokemonId => {
-        try {
-            const pokemon = await this.pokemonClient.getPokemon(pokemonId);
-            this.addPokemonItem(pokemon);
-        } catch (error) {
-            this.addItem(`Pokemon with ID ${pokemonId} was not found`);
+    async addTodo(todo) {
+        const splitList = todo.split(",");
+        if (this.checkNumbers(splitList)) {
+            const pokemonIDArray = splitList;
+            const pokemonNameArray = await this.pokemonClient.getPokemons(this.trimSpaces(splitList));
+            for (const element of pokemonNameArray) {
+                let todoObject = {
+                    todo: element,
+                    pokemonID: pokemonIDArray[pokemonNameArray.indexOf(element)],
+                    isPokemon: true
+                }
+               await this.addToDB(todoObject);
+            }
+        }
+        else{
+            let todoObject = {
+                todo: todo,
+                pokemonID: null,
+                isPokemon: false
+            }
+            await this.addToDB(todoObject);
         }
     }
 
-    fetchAndAddManyPokemon = async inputValue => {
-        try {
-            const pokemons = await this.pokemonClient.getManyPokemon(inputValue.replace("/ /g", "").split(","));
-            pokemons.forEach(this.addPokemonItem);
-        } catch (error) {
-            console.error(error)
-            this.addItem(`Failed to fetch pokemon with this input: ${inputValue}`)
+
+    async addToDB(todo){
+       await Todo.create({"todo": todo.todo, "isPokemon": todo.isPokemon, "pokemonID": todo.pokemonID});
+    }
+
+    getTodoList() {
+        try{
+            const data = Todo.findAll();
+            console.log(data);
+        }
+        catch{
+            console.log("No todo list found");
+            return;
         }
     }
 
-    deleteItem = item => {
-        this.items = this.items.filter(i => i !== item);
+
+    deleteTodo(todo) {
+        const list = this.getTodoList();
+        list.forEach(element => {
+            if (element.todo === todo) {
+                this.history.push(element);
+                list.splice(list.indexOf(element), 1);
+            }
+        });
+        this.todoList = list;
+        this.writeToFile();
     }
 
-    _isNumber = value => !isNaN(Number(value));
-    _isList = value => value.split(",").every(this._isNumber);
+    clearTodoList(){
+        this.todoList = [];
+        this.writeToFile();
+    }
 }
 
-module.exports = new ItemManager()

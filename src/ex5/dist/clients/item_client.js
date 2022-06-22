@@ -1,24 +1,35 @@
-class ItemClient {
-    getItems = async () => {
-        const response = await fetch('/items')
-        const todos = await response.json()
+// Create an ItemClient class here. This is what makes requests to your express server (your own custom API!)
 
-        return todos
+export default class item_client {
+    async getTodos() {
+        const response = await fetch("http://localhost:8000/todos");
+        const data = await response.json();
+        return data;
     }
 
-    postItem = async item => {
-        await fetch('/item', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ item })
-        })
+    async addTodo(todo) {
+        const response = await fetch("http://localhost:8000/todo", {
+            method: "POST",
+            body: JSON.stringify({todo}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
     }
 
-    deleteItem = async item => {
-        await fetch('/item', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ item })
-        })
+    async deleteTodo(todo) {
+        const response = await fetch("http://localhost:8000/todo", {
+            method: "DELETE",
+            body: JSON.stringify({todo}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
     }
+    async clearTodoList() {
+        const response = await fetch("http://localhost:8000/todos", {
+            method: "DELETE"
+        });
+    }
+
 }
