@@ -1,6 +1,6 @@
 {
   "name": "monday-u-exercises-1",
-  "type": "module",
+  "type": "commonjs",
   "version": "1.0.0",
   "scripts": {
     "start": "node server.js",

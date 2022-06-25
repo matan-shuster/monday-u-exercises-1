@@ -1,8 +1,10 @@
 // The Pokemon Client (using axios) goes here
 
-import axios from 'axios';
+// import axios from 'axios';
 
-export default class PokemonClient{
+const axios = require('axios');
+
+class PokemonClient{
     // Constructor
     constructor(){
         this.API_BASE = 'https://pokeapi.co/api/v2/';
@@ -36,3 +38,5 @@ export default class PokemonClient{
     }
 
 }
+
+module.exports = PokemonClient;

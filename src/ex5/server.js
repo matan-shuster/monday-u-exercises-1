@@ -1,8 +1,8 @@
 // Express boilerplate, hosting the `dist` file, connecting to the routes
 
-import express from "express";
-import router from "./server/routes/api.js";
-import bodyParser from "body-parser";
+const express = require("express");
+const router = require("./server/routes/api.js");
+const bodyParser = require("body-parser");
 const port = 8000;
 const app = express();
 

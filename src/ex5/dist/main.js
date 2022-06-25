@@ -14,6 +14,7 @@ class Main{
     toggleTodoList(state){
         document.getElementById("todoList").hidden = !state;
     }
+
     async renderTodoList() {
         this.toggleLoader(true);
         this.toggleTodoList(false);
@@ -23,6 +24,7 @@ class Main{
         document.getElementById("todoList").innerHTML = "";
         todoList.forEach(element => {
             const li = document.createElement("li");
+
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.className = "pl";
@@ -30,8 +32,28 @@ class Main{
             checkbox.name = "selectTodo";
             checkbox.addEventListener("change", this.toggleDeleteButton.bind(this));
             li.append(checkbox);
+
             li.append(element.todo);
+
+            const select = document.createElement("select");
+            select.className = "dropdown";
+            select.name = "selectStatus";
+            const noStatus = document.createElement("option");
+            noStatus.value = "";
+            noStatus.text = "";
+            const option1 = document.createElement("option");
+            option1.value = "done";
+            option1.text = "done";
+            select.append(noStatus);
+            select.append(option1);
+            select.addEventListener("change", this.updateStatus.bind(this));
+            if(element.status === "done"){
+                select.value = "done";
+            };
+            li.append(select);
+
             li.id = 'todo' + todoList.indexOf(element);
+
             const deleteButton = document.createElement("img");
             deleteButton.src = "./images/delete_icon.svg";
             deleteButton.className = "deleteButton";
@@ -51,6 +73,7 @@ class Main{
         }
         document.getElementById("deleteTodo").hidden = true;
     }
+
     async addTodo() {
         try{
             const todo = document.getElementById("newTodo").value;
@@ -88,8 +111,19 @@ class Main{
         await this.renderTodoList();
     }
 
+    async updateStatus(select){
+        try{
+            const status = select.target.textContent;
+            const todo = select.target.parentElement.innerText;
+            await this.itemClient.updateStatus(todo, status);
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+
     init() {
-        this.renderTodoList().catch(e => alert(e));
+        this.renderTodoList().catch(e => console.log(e));
 
         document.getElementById("addTodo").addEventListener("click", this.addTodo.bind(this));
 
