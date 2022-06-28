@@ -1,14 +1,23 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Items', {
+    await queryInterface.createTable('Todos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      itemName: {
+      todo: {
+        type: Sequelize.STRING
+      },
+      isPokemon: {
+        type: Sequelize.BOOLEAN
+      },
+      pokemonID: {
+        type: Sequelize.INTEGER
+      },
+      status: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -20,13 +29,8 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-
-    await queryInterface.addIndex('Items', ['itemName'], {
-      name: 'index_items_itemName',
-    });
-
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Items');
+    await queryInterface.dropTable('Todos');
   }
 };
