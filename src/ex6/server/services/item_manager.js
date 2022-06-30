@@ -1,8 +1,11 @@
 // The ItemManager should go here. Remember that you have to export it.
 
+// import Todo from "../db/models/todo.js";
 const {Todo} = require("../db/models");
 
+// import PokemonClient from "../clients/pokemon_client.js";
 const PokemonClient = require("../clients/pokemon_client.js");
+const {writeFileSync, readFileSync} = require("fs");
 
 class ItemManager {
     // Constructor
@@ -57,7 +60,7 @@ class ItemManager {
 
         catch{
             console.log("No todo list found");
-            return [];
+            return;
         }
     }
 
