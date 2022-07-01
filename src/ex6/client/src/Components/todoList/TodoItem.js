@@ -1,4 +1,4 @@
-const newTodo = ({todo}) => {
+const TodoItem = ({todo}) => {
     return (
         <div className="todo">
             <input type="checkbox" className="pl" />
@@ -8,4 +8,4 @@ const newTodo = ({todo}) => {
     )
 }
 
-export default newTodo;
+export default TodoItem;

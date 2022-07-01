@@ -3,9 +3,16 @@
 const apiUrl = 'http://localhost:3000';
 export default class item_client {
     async getTodos() {
-        const response = await fetch(`${apiUrl}/todos`);
-        const data = await response.json();
-        return data;
+        try{
+            const response = await fetch(`${apiUrl}/todos`);
+            console.log(response)
+            const data = await response.json();
+            return data;
+        }
+        catch (e) {
+            console.log(e);
+        }
+
     }
 
     async addTodo(todo) {
