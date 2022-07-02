@@ -5,7 +5,6 @@ export default class item_client {
     async getTodos() {
         try{
             const response = await fetch(`${apiUrl}/todos`);
-            console.log(response)
             const data = await response.json();
             return data;
         }

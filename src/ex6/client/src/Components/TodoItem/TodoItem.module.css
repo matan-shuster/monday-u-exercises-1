@@ -1,0 +1,9 @@
+.todo{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    border: 1px solid #03afd2;
+}
+.text{
+    flex:1;
+}
