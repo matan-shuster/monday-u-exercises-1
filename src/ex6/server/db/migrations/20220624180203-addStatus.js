@@ -1,26 +1,35 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    return queryInterface.addColumn('Todos', 'status', {
+    return Promise.all([
+      queryInterface.addColumn("Todos", "status", {
         type: Sequelize.STRING,
-        allowNull: true
-    });
-    },
+        allowNull: true,
+      }),
+      queryInterface.addColumn("Todos", "urgency", {
+        type: Sequelize.STRING,
+        allowNull: true,
+      }),
+    ]);
+  },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
      * Example:
      * await queryInterface.dropTable('users');
      */
-    return queryInterface.removeColumn('Todos', 'status');
-  }
+    return Promise.all([
+      queryInterface.removeColumn("Todos", "status"),
+      queryInterface.removeColumn("Todos", "urgency"),
+    ]);
+  },
 };

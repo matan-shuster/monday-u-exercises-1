@@ -7,3 +7,12 @@
 .text{
     flex:1;
 }
+
+.deleteIcon{
+    margin-left:10px;
+    cursor:pointer;
+}
+
+.deleteIcon:hover{
+    background-color: lightgray;
+}

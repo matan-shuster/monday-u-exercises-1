@@ -1,10 +1,6 @@
 'use strict';
 
-// import fs from "fs";
-//
-// import path from "path";
-//
-// import Sequelize from "sequelize";
+
 
 const fs = require("fs");
 const path = require("path");

@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     todo: DataTypes.STRING,
     isPokemon: DataTypes.BOOLEAN,
     pokemonID: DataTypes.INTEGER,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    urgency: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Todo',

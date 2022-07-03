@@ -1,32 +1,56 @@
 import styles from "./TodoItem.module.css";
-import Select from "../Dropdown/Dropdown";
+import DropdownComponent from "../Dropdown/Dropdown";
+import CheckboxComponent from "../Checkbox/Checkbox";
+import deleteIcon from '../../assets/delete_icon.svg';
 
-const TodoItem = ({ id, todo,status, updateStatus }) => {
-    const selected = {value: todo, label: status};
-    const onChangeHandler = (event) => {
+const TodoItem = ({ id, todo,status, updateStatus, urgency, updateUrgency, selectedArray , handleDeleteTodo}) => {
+
+    const selectedStatus = status? [{value: status, label: status}]: [];
+    const selectedUrgency= urgency? [{value: urgency, label:urgency}] : [];
+    const onStatusChange = (event) => {
         updateStatus(id, event.value);
     }
+    const onUrgencyChange =(event) => {
+        updateUrgency(id,event.value)
+    }
+
+    const onCheckboxChange = (event) => {
+        if(event.target.checked){
+            selectedArray.push(id)
+        }
+        else{
+            selectedArray.splice(selectedArray.indexOf(id),1)
+        }
+    }
+    const onDeleteTodo = () => {
+        handleDeleteTodo(id);
+    }
+
   return (
     <div className={styles.todo}>
-      <input type="checkbox" className="pl" />
+      <CheckboxComponent onChangeHandler={onCheckboxChange}/>
       <span className={styles.text}>{todo}</span>
-      <Select
+      <DropdownComponent
         options={[
-          { value: "inProgress", label: "In Progress" },
+          { value: "In Progress", label: "In Progress" },
           { value: "Done", label: "Done" },
         ]}
-        selectedValue={selected}
+        onChangeHandler={onStatusChange}
+        selectedValue={selectedStatus}
         label="Status"
       />
-      <Select
+      <DropdownComponent
         options={[
           { value: "Critical", label: "Critical" },
           { value: "High", label: "High" },
           { value: "Medium", label: "Medium" },
           { value: "Low", label: "Low" },
         ]}
+        onChangeHandler={onUrgencyChange}
+        selectedValue={selectedUrgency}
         label="Urgency"
       />
+        <img src={deleteIcon} className={styles.deleteIcon} onClick={onDeleteTodo}/>
     </div>
   );
 };

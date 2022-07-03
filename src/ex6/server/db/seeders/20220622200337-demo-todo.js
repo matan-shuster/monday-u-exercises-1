@@ -16,6 +16,7 @@ module.exports = {
       isPokemon: false,
       pokemonID: null,
       status: null,
+      urgency: null,
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

@@ -1,54 +1,79 @@
 // Create an ItemClient class here. This is what makes requests to your express server (your own custom API!)
 
-const apiUrl = 'http://localhost:3000';
+const apiUrl = 'http://localhost:3000/todos';
 export default class item_client {
     async getTodos() {
-        try{
-            const response = await fetch(`${apiUrl}/todos`);
+        try {
+            const response = await fetch(`${apiUrl}`);
             const data = await response.json();
             return data;
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e);
         }
 
     }
 
-    async addTodo(todo) {
-        const response = await fetch(`${apiUrl}/todo`, {
+    addTodo(todo) {
+        return fetch(`${apiUrl}`, {
             method: "POST",
             body: JSON.stringify({todo}),
             headers: {
                 "Content-Type": "application/json"
             }
-        });
+        }).then(res => res.json());
+
     }
 
-    async updateStatus(todo, status) {
-        const response = await fetch("http://localhost:3000/todo", {
+    deleteSelected(selectedArray) {
+        return fetch(`${apiUrl}/selected`, {
+            method: "DELETE",
+            body: JSON.stringify({selectedArray}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json());
+    }
+
+    updateStatus(id, status) {
+        return fetch(`${apiUrl}/status`, {
             method: "PUT",
             body: JSON.stringify({
-                todo: todo,
-                status : status}),
+                id,
+                status: status
+            }),
             headers: {
                 "Content-Type": "application/json"
             }
-        });
+        }).then(res => res.json());
     }
 
-    async deleteTodo(todo) {
-        const response = await fetch("http://localhost:3000/todo", {
-            method: "DELETE",
-            body: JSON.stringify({todo}),
+    updateUrgency(id, urgency) {
+            return fetch(`${apiUrl}/urgency`, {
+            method: "PUT",
+            body: JSON.stringify({
+                id,
+                urgency: urgency
+            }),
             headers: {
                 "Content-Type": "application/json"
             }
-        });
+        }).then(res => res.json());
     }
-    async clearTodoList() {
-        const response = await fetch("http://localhost:3000/todos", {
+
+    deleteTodo(id) {
+        return fetch(`${apiUrl}/single`, {
+            method: "DELETE",
+            body: JSON.stringify({id}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => res.json());
+    }
+
+    clearTodoList() {
+        return fetch(`${apiUrl}/todos`, {
             method: "DELETE"
-        });
+        }).then(res => res.json());
     }
 
 }

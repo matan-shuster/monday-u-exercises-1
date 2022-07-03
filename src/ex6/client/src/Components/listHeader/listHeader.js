@@ -12,7 +12,7 @@ const ListHeader = ({ onTodoAdd, onDeleteAll }) => {
       <input
         type="text"
         id="newTodo"
-        className={styles.addTodo}
+        className={styles.input}
         onChange={onChangeInput}
         placeholder="Add your new Todo"
       />
