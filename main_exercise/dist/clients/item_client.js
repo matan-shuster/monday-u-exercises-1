@@ -17,6 +17,18 @@ export default class item_client {
         });
     }
 
+    async updateStatus(todo, status) {
+        const response = await fetch("http://localhost:8000/todo", {
+            method: "PUT",
+            body: JSON.stringify({
+                todo: todo,
+                status : status}),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+    }
+
     async deleteTodo(todo) {
         const response = await fetch("http://localhost:8000/todo", {
             method: "DELETE",
