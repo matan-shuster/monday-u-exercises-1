@@ -1,10 +1,13 @@
 // The ItemManager should go here. Remember that you have to export it.
 
-import {readFileSync, writeFileSync} from "fs";
+// import Todo from "../db/models/todo.js";
+const {Todo} = require("../db/models");
 
-import PokemonClient from "../clients/pokemon_client.js";
+// import PokemonClient from "../clients/pokemon_client.js";
+const PokemonClient = require("../clients/pokemon_client.js");
+const {writeFileSync, readFileSync} = require("fs");
 
-export default class ItemManager {
+class ItemManager {
     // Constructor
     constructor() {
         this.history = [];
@@ -29,37 +32,32 @@ export default class ItemManager {
         if (this.checkNumbers(splitList)) {
             const pokemonIDArray = splitList;
             const pokemonNameArray = await this.pokemonClient.getPokemons(this.trimSpaces(splitList));
-            pokemonNameArray.forEach(element => {
+            for (const element of pokemonNameArray) {
                 let todoObject = {
                     todo: element,
                     pokemonID: pokemonIDArray[pokemonNameArray.indexOf(element)],
-                    isPokemon: true
+                    isPokemon: true,
                 }
-                this.todoList.push(todoObject);
-            });
+                await Todo.create({"todo": todoObject.todo, "pokemonID": todoObject.pokemonID, "isPokemon": todoObject.isPokemon, "status": todoObject.status});
+            }
         }
         else{
             let todoObject = {
                 todo: todo,
-                isPokemon: false
+                isPokemon: false,
             }
-
-            this.todoList.push(todoObject);
+            await Todo.create({"todo": todoObject.todo, "pokemonID": todoObject.pokemonID, "isPokemon": todoObject.isPokemon, "status": todoObject.status});
         }
-        this.writeToFile();
     }
 
 
-    writeToFile(){
-        writeFileSync("todo.json", JSON.stringify(this.todoList));
-    }
 
-    getTodoList() {
-        try{
-            const data = readFileSync("todo.json");
-            const list = JSON.parse(data);
-            return list;
+    async getTodoList() {
+        try {
+            const data = (await Todo.findAll()).map(element => element.get({plain:true}));
+            return data;
         }
+
         catch{
             console.log("No todo list found");
             return;
@@ -67,21 +65,24 @@ export default class ItemManager {
     }
 
 
-    deleteTodo(todo) {
-        const list = this.getTodoList();
-        list.forEach(element => {
-            if (element.todo === todo) {
-                this.history.push(element);
-                list.splice(list.indexOf(element), 1);
-            }
+    async deleteTodo(todo) {
+        await Todo.destroy({
+            where: {todo: todo}
         });
-        this.todoList = list;
-        this.writeToFile();
     }
 
-    clearTodoList(){
-        this.todoList = [];
-        this.writeToFile();
+    async clearTodoList(){
+        await Todo.destroy({
+            where: {}
+        });
+    }
+    async updateStatus(todo, status){
+        await Todo.update({
+            status: status
+        }, {
+            where: {todo: todo}
+        });
     }
 }
 
+module.exports = ItemManager;
