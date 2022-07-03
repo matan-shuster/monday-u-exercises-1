@@ -23,7 +23,7 @@ class PokemonClient{
             await Promise.all(pokemonIDArray.map(async (id) => {
                 const response = await axios.get(`${this.API_BASE}pokemon/${id}`);
                 const data = await response.data;
-                let abilityList = [];
+                const abilityList = [];
                 data["types"].forEach(element => {
                     abilityList.push(this.capitalizeFirstLetter(element["type"]["name"]));
                 });
