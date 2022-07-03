@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./listHeader.module.css";
+import PropTypes from "prop-types";
 
 const ListHeader = ({ onTodoAdd, onDeleteAll }) => {
   const [todo, setTodo] = useState("");
@@ -31,3 +32,9 @@ const ListHeader = ({ onTodoAdd, onDeleteAll }) => {
 };
 
 export default ListHeader;
+
+ListHeader.propTypes = {
+    onTodoAdd: PropTypes.func.isRequired,
+    onDeleteAll: PropTypes.func.isRequired,
+
+}

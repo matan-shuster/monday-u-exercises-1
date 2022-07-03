@@ -1,8 +1,7 @@
 //Define your endpoints here (this is your "controller file")
 //
-// import express from "express";
+
 const express = require("express");
-// import ItemManager from "../services/item_manager.js";
 const ItemManager = require("../services/item_manager.js");
 
 const router = express.Router();
@@ -14,23 +13,34 @@ router.use(async (req, res, next) => {
 });
 const itemManager = new ItemManager();
 router.get('/todos', async (req, res) => {
-    res.send(await itemManager.getTodoList(req,res));
+    res.send(await itemManager.getTodoList(req, res));
 });
-router.post('/todo', async (req, res) => {
-    await itemManager.addTodo(req.body.todo);
-    res.status(200).json(req.body.todo);
+router.post('/todos', async (req, res) => {
+   const renderedTodos= await itemManager.addTodo(req.body.todo);
+   console.log(renderedTodos)
+    res.status(200).json(renderedTodos);
 });
-router.put('/todo', async (req, res) => {
-    await itemManager.updateStatus(req.body.todo, req.body.status);
+router.put('/todos/status', async (req, res) => {
+    await itemManager.updateStatus(req.body.id, req.body.status);
     res.status(200).json(req.body.todo);
 });
 
-router.delete('/todo',async (req, res) => {
-    await itemManager.deleteTodo(req.body.todo);
-    res.status(200).json(req.body.todo);
+router.put('/todos/urgency', async (req,res) => {
+    await itemManager.updateUrgency(req.body.id,req.body.urgency);
+    res.status(200).json(req.body.todo)
+})
+
+router.delete('/todos/single', async (req, res) => {
+    await itemManager.deleteTodo(req.body.id);
+    res.status(200).json(req.body.id);
 });
-router.delete('/todos',async (req, res) => {
+router.delete('/todos', async (req, res) => {
     await itemManager.clearTodoList();
     res.status(200).json("Todo list cleared");
+});
+
+router.delete('/todos/selected', async (req, res) => {
+    await itemManager.deleteSelected(req.body.selectedArray);
+    res.status(200).json("selected cleared");
 });
 module.exports = router;

@@ -2,6 +2,7 @@ import styles from "./TodoItem.module.css";
 import DropdownComponent from "../Dropdown/Dropdown";
 import CheckboxComponent from "../Checkbox/Checkbox";
 import deleteIcon from '../../assets/delete_icon.svg';
+import PropTypes from "prop-types";
 
 const TodoItem = ({ id, todo,status, updateStatus, urgency, updateUrgency, selectedArray , handleDeleteTodo}) => {
 
@@ -56,3 +57,14 @@ const TodoItem = ({ id, todo,status, updateStatus, urgency, updateUrgency, selec
 };
 
 export default TodoItem;
+
+TodoItem.propTypes = {
+    id: PropTypes.number.isRequired,
+    todo: PropTypes.string.isRequired,
+    status: PropTypes.string,
+    updateStatus: PropTypes.func.isRequired,
+    urgency: PropTypes.string,
+    updateUrgency: PropTypes.func.isRequired,
+    selectedArray: PropTypes.array.isRequired,
+    handleDeleteTodo: PropTypes.func.isRequired,
+}
