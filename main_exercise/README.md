@@ -26,7 +26,7 @@ You can use your existing project (copy+paste then refactor), or use the boilerp
 - [ ] On app load (i.e. when a user enters the page) it should fetch all the todo items and render them
 
 In terms of the front end, it will look the same as before:
-![](../assets/hw-2.gif)
+![](src/assets/hw-2.gif)
 
 But now when you refresh the page **the data should still be there**
 
