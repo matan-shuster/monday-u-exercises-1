@@ -1,8 +1,10 @@
 // The Pokemon Client (using axios) goes here
 
-import axios from 'axios';
+// import axios from 'axios';
 
-export default class PokemonClient{
+const axios = require('axios');
+
+class PokemonClient{
     // Constructor
     constructor(){
         this.API_BASE = 'https://pokeapi.co/api/v2/';
@@ -21,7 +23,7 @@ export default class PokemonClient{
             await Promise.all(pokemonIDArray.map(async (id) => {
                 const response = await axios.get(`${this.API_BASE}pokemon/${id}`);
                 const data = await response.data;
-                let abilityList = [];
+                const abilityList = [];
                 data["types"].forEach(element => {
                     abilityList.push(this.capitalizeFirstLetter(element["type"]["name"]));
                 });
@@ -36,3 +38,5 @@ export default class PokemonClient{
     }
 
 }
+
+module.exports = PokemonClient;
