@@ -49,7 +49,7 @@ export default class item_client {
   }
 
   deleteSelected(selectedArray) {
-    return fetch(`${apiUrl}/selected`, {
+    await fetch(`${apiUrl}/selected`, {
       method: 'DELETE',
       body: JSON.stringify({ selectedArray }),
       headers: {
