@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -9,15 +9,15 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     return Promise.all([
-      queryInterface.addColumn("Todos", "status", {
+      queryInterface.addColumn('Todos', 'status', {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: true
       }),
-      queryInterface.addColumn("Todos", "urgency", {
+      queryInterface.addColumn('Todos', 'urgency', {
         type: Sequelize.STRING,
-        allowNull: true,
-      }),
-    ]);
+        allowNull: true
+      })
+    ])
   },
 
   async down(queryInterface, Sequelize) {
@@ -28,8 +28,8 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     return Promise.all([
-      queryInterface.removeColumn("Todos", "status"),
-      queryInterface.removeColumn("Todos", "urgency"),
-    ]);
-  },
-};
+      queryInterface.removeColumn('Todos', 'status'),
+      queryInterface.removeColumn('Todos', 'urgency')
+    ])
+  }
+}

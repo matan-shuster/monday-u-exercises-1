@@ -1,18 +1,18 @@
-.todo{
-    display:flex;
-    flex-direction:row;
-    align-items:center;
-    border: 1px solid #03afd2;
+.todo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #03afd2;
 }
-.text{
-    flex:1;
-}
-
-.deleteIcon{
-    margin-left:10px;
-    cursor:pointer;
+.text {
+  flex: 1;
 }
 
-.deleteIcon:hover{
-    background-color: lightgray;
+.deleteIcon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.deleteIcon:hover {
+  background-color: lightgray;
 }

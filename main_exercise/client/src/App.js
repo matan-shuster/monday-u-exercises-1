@@ -1,5 +1,5 @@
-import "./App.css";
-import TodoList from "./Components/TodoList/TodoList";
+import './App.css'
+import TodoList from './Components/TodoList/TodoList'
 
 function App() {
   return (
@@ -7,7 +7,7 @@ function App() {
       <h1>A good list</h1>
       <TodoList />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

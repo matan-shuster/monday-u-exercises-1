@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint:fix": "prettier --write ."
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "sequelize": "^6.21.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.18"
+    "nodemon": "^2.0.18",
+    "prettier": "^2.7.1"
   }
 }
