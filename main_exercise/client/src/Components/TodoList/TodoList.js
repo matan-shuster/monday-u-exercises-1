@@ -70,6 +70,7 @@ export default function TodoList() {
   };
   const handleDeleteSelected = async () => {
     try {
+      console.log(selectedArray);
       await itemClient.deleteSelected(selectedArray);
       setTodos(todos.filter(todo => !selectedArray.includes(todo.id)));
     } catch (e) {
@@ -98,7 +99,7 @@ export default function TodoList() {
           );
         })}
       </section>
-      <button id="deleteTodo" className={styles.deleteSelected} onClick={handleDeleteSelected}>
+      <button id="deleteSelected" className={styles.deleteSelected} onClick={handleDeleteSelected}>
         Delete Selected
       </button>
     </div>

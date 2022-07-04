@@ -94,7 +94,7 @@ class ItemManager {
       catch (e) {
         console.log(e)
       }})};
-
+  ש
   async clearTodoList() {
     await Todo.destroy({
       where: {},

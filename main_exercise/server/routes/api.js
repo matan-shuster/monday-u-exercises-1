@@ -30,8 +30,14 @@ router.put('/todos/urgency', async (req,res) => {
     res.status(200).json(req.body.todo)
 })
 
-router.delete('/todos/single', async (req, res) => {
-    await itemManager.deleteTodo(req.body.id);
+
+router.delete('/todos/selected', async (req, res) => {
+    await itemManager.deleteSelected(req.body.selectedArray);
+    res.status(200).json("selected cleared");
+});
+router.delete('/todos/:id', async (req, res) => {
+    const {id} = req.params;
+    await itemManager.deleteTodo(id);
     res.status(200).json(req.body.id);
 });
 router.delete('/todos', async (req, res) => {
@@ -39,8 +45,5 @@ router.delete('/todos', async (req, res) => {
     res.status(200).json("Todo list cleared");
 });
 
-router.delete('/todos/selected', async (req, res) => {
-    await itemManager.deleteSelected(req.body.selectedArray);
-    res.status(200).json("selected cleared");
-});
+
 module.exports = router;
