@@ -48,7 +48,7 @@ export default class item_client {
     }).then((res) => res.json())
   }
 
-  deleteSelected(selectedArray) {
+  async deleteSelected(selectedArray) {
     await fetch(`${apiUrl}/selected`, {
       method: 'DELETE',
       body: JSON.stringify({ selectedArray }),
