@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  matan-mysql:
+    platform: linux/x86_64
+    image: mysql
+    command: "--sql_mode=NO_ENGINE_SUBSTITUTION --ssl=0"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
