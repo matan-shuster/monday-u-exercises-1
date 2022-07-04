@@ -25,6 +25,18 @@ class ItemManager {
     return this.trimSpaces(splitList).every((element) => regex.test(element))
   }
 
+  async createTodo(todoObject) {
+    const {
+      dataValues: { id }
+    } = await Todo.create({
+      todo: todoObject.todo,
+      pokemonID: todoObject.pokemonID,
+      isPokemon: todoObject.isPokemon,
+      status: todoObject.status,
+      urgency: todoObject.urgency
+    })
+    return {todoObject, id }
+  }
   async addTodo(todo) {
     const splitList = todo.split(',')
     const renderedTodos = []
@@ -39,32 +51,16 @@ class ItemManager {
           pokemonID: pokemonIDArray[pokemonNameArray.indexOf(element)],
           isPokemon: true
         }
-        const {
-          dataValues: { id }
-        } = await Todo.create({
-          todo: todoObject.todo,
-          pokemonID: todoObject.pokemonID,
-          isPokemon: todoObject.isPokemon,
-          status: todoObject.status,
-          urgency: todoObject.urgency
-        })
-        renderedTodos.push({ ...todoObject, id })
+      const generatedTodo = await this.createTodo(todoObject)
+        renderedTodos.push({ ...generatedTodo})
       }
     } else {
       const todoObject = {
         todo: todo,
         isPokemon: false
       }
-      const {
-        dataValues: { id }
-      } = await Todo.create({
-        todo: todoObject.todo,
-        pokemonID: todoObject.pokemonID,
-        isPokemon: todoObject.isPokemon,
-        status: todoObject.status,
-        urgency: todoObject.urgency
-      })
-      renderedTodos.push({ ...todoObject, id })
+     const generatedTodo = await this.createTodo(todoObject)
+      renderedTodos.push({ ...generatedTodo})
     }
     return renderedTodos
   }
