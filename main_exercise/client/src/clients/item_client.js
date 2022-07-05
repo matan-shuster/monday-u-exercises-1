@@ -23,7 +23,7 @@ export default class item_client {
   }
 
   updateStatus(id, status) {
-    return fetch(`${apiUrl}/status`, {
+    return fetch(`${apiUrl}/${id}/status`, {
       method: 'PUT',
       body: JSON.stringify({
         id,
@@ -36,7 +36,7 @@ export default class item_client {
   }
 
   updateUrgency(id, urgency) {
-    return fetch(`${apiUrl}/urgency`, {
+    return fetch(`${apiUrl}/${id}/urgency`, {
       method: 'PUT',
       body: JSON.stringify({
         id,

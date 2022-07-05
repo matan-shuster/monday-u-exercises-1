@@ -1,7 +1,8 @@
-import { Dropdown } from 'monday-ui-react-core'
+import { Chips, Dropdown, Label } from 'monday-ui-react-core'
 import 'monday-ui-react-core/dist/main.css'
 import PropTypes from 'prop-types'
 import styles from './Dropdown.module.css'
+import { useCallback } from 'react'
 
 const DropdownComponent = ({
   options,
@@ -9,6 +10,9 @@ const DropdownComponent = ({
   selectedValue,
   onChangeHandler
 }) => {
+  const labelRenderer = useCallback(({ label, color }) => {
+    return <Chips label={label} color={color} isAnimationDisabled />
+  })
   return (
     <Dropdown
       options={options}
@@ -16,6 +20,8 @@ const DropdownComponent = ({
       defaultValue={selectedValue}
       onChange={onChangeHandler}
       placeholder={label}
+      labelRenderer={labelRenderer}
+      optionRenderer={labelRenderer}
       clearable={false}
       searchable={false}
     />

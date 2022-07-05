@@ -3,6 +3,7 @@ import DropdownComponent from '../Dropdown/Dropdown'
 import CheckboxComponent from '../Checkbox/Checkbox'
 import deleteIcon from '../../assets/delete_icon.svg'
 import PropTypes from 'prop-types'
+import { Label, Chips } from 'monday-ui-react-core'
 
 const TodoItem = ({
   id,
@@ -40,8 +41,12 @@ const TodoItem = ({
       <span className={styles.text}>{todo}</span>
       <DropdownComponent
         options={[
-          { value: 'In Progress', label: 'In Progress' },
-          { value: 'Done', label: 'Done' }
+          {
+            value: 'In Progress',
+            label: 'In Progress',
+            color: Chips.colors.WORKING_ORANGE
+          },
+          { value: 'Done', label: 'Done', color: Chips.colors.POSITIVE }
         ]}
         onChangeHandler={onStatusChange}
         selectedValue={selectedStatus}
@@ -49,10 +54,18 @@ const TodoItem = ({
       />
       <DropdownComponent
         options={[
-          { value: 'Critical', label: 'Critical' },
-          { value: 'High', label: 'High' },
-          { value: 'Medium', label: 'Medium' },
-          { value: 'Low', label: 'Low' }
+          {
+            value: 'Critical',
+            label: 'Critical',
+            color: Chips.colors.DARK_RED
+          },
+          { value: 'High', label: 'High', color: Chips.colors.SUNSET },
+          {
+            value: 'Medium',
+            label: 'Medium',
+            color: Chips.colors.WORKING_ORANGE
+          },
+          { value: 'Low', label: 'Low', color: Chips.colors.BRIGHT_GREEN }
         ]}
         onChangeHandler={onUrgencyChange}
         selectedValue={selectedUrgency}

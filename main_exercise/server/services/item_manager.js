@@ -35,7 +35,7 @@ class ItemManager {
       status: todoObject.status,
       urgency: todoObject.urgency
     })
-    return {todoObject, id }
+    return { todoObject, id }
   }
   async addTodo(todo) {
     const splitList = todo.split(',')
@@ -51,15 +51,18 @@ class ItemManager {
           pokemonID: pokemonIDArray[pokemonNameArray.indexOf(element)],
           isPokemon: true
         }
-      const generatedTodo = await this.createTodo(todoObject)
-        renderedTodos.push({ ...generatedTodo.todoObject, id: generatedTodo.id })
+        const generatedTodo = await this.createTodo(todoObject)
+        renderedTodos.push({
+          ...generatedTodo.todoObject,
+          id: generatedTodo.id
+        })
       }
     } else {
       const todoObject = {
         todo: todo,
         isPokemon: false
       }
-     const generatedTodo = await this.createTodo(todoObject)
+      const generatedTodo = await this.createTodo(todoObject)
       renderedTodos.push({ ...generatedTodo.todoObject, id: generatedTodo.id })
     }
     return renderedTodos
