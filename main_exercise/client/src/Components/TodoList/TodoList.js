@@ -3,11 +3,14 @@ import item_client from '../../clients/item_client'
 import { useEffect, useState } from 'react'
 import styles from './TodoList.module.css'
 import TodoItem from '../TodoItem/TodoItem'
+import Loader from '../Loader/Loader'
 
 export default function TodoList() {
   const itemClient = new item_client()
   const selectedArray = []
   const [todos, setTodos] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
   async function updateStatus(id, status) {
     try {
       await itemClient.updateStatus(id, status)
@@ -26,9 +29,12 @@ export default function TodoList() {
 
   async function initialTodos() {
     try {
+      setIsLoading(true)
       const todos = await itemClient.getTodos()
       setTodos(todos)
+      setIsLoading(false)
     } catch (e) {
+      setIsLoading(false)
       console.log(e)
     }
   }
@@ -43,9 +49,12 @@ export default function TodoList() {
 
   const handleAddTodo = async (todo) => {
     try {
+      setIsLoading(true)
       const renderedTodo = await itemClient.addTodo(todo)
       setTodos([...todos, ...renderedTodo])
+      setIsLoading(false)
     } catch (e) {
+      setIsLoading(false)
       console.log(e)
     }
   }
@@ -81,6 +90,7 @@ export default function TodoList() {
     <div>
       <ListHeader onTodoAdd={handleAddTodo} onDeleteAll={handleDeleteAll} />
       <section className={styles.todoListContainer}>
+        {isLoading ? <Loader /> : null}
         {todos.map((todo) => {
           return (
             <TodoItem

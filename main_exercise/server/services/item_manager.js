@@ -52,7 +52,7 @@ class ItemManager {
           isPokemon: true
         }
       const generatedTodo = await this.createTodo(todoObject)
-        renderedTodos.push({ ...generatedTodo})
+        renderedTodos.push({ ...generatedTodo.todoObject, id: generatedTodo.id })
       }
     } else {
       const todoObject = {
@@ -60,7 +60,7 @@ class ItemManager {
         isPokemon: false
       }
      const generatedTodo = await this.createTodo(todoObject)
-      renderedTodos.push({ ...generatedTodo})
+      renderedTodos.push({ ...generatedTodo.todoObject, id: generatedTodo.id })
     }
     return renderedTodos
   }

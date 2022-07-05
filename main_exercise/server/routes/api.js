@@ -3,19 +3,23 @@
 
 const express = require('express')
 const ItemManager = require('../services/item_manager.js')
+const morgan = require('morgan')
+const winston = require('../logger/winston.js')
 
 const router = express.Router()
 
+router.use(morgan('combined', {stream: winston.stream}))
 router.use(async (req, res, next) => {
   console.log('A request was made to the API')
   console.log(req.body)
   next()
 })
 const itemManager = new ItemManager()
-router.get('/todos', async (req, res) => {
+router.get('/todos', async (req, res,next ) => {
   res.send(await itemManager.getTodoList(req, res))
+  next()
 })
-router.post('/todos', async (req, res) => {
+router.post('/todos', async (req, res, next) => {
   const renderedTodos = await itemManager.addTodo(req.body.todo)
   console.log(renderedTodos)
   res.status(200).json(renderedTodos)
