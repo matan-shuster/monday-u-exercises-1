@@ -3,7 +3,7 @@ import DropdownComponent from '../Dropdown/Dropdown'
 import CheckboxComponent from '../Checkbox/Checkbox'
 import deleteIcon from '../../assets/delete_icon.svg'
 import PropTypes from 'prop-types'
-import { Label, Chips } from 'monday-ui-react-core'
+import {Chips} from 'monday-ui-react-core'
 
 const TodoItem = ({
   id,
