@@ -78,7 +78,6 @@ export default function TodoList() {
   }
   const handleDeleteSelected = async () => {
     try {
-      console.log(selectedArray)
       await itemClient.deleteSelected(selectedArray)
       setTodos(todos.filter((todo) => !selectedArray.includes(todo.id)))
     } catch (e) {
