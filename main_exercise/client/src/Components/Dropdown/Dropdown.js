@@ -1,4 +1,4 @@
-import { Chips, Dropdown} from 'monday-ui-react-core'
+import { Chips, Dropdown } from 'monday-ui-react-core'
 import 'monday-ui-react-core/dist/main.css'
 import PropTypes from 'prop-types'
 import styles from './Dropdown.module.css'

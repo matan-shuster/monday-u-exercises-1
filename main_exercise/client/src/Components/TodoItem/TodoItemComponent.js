@@ -3,25 +3,24 @@ import DropdownComponent from '../Dropdown/Dropdown'
 import CheckboxComponent from '../Checkbox/Checkbox'
 import deleteIcon from '../../assets/delete_icon.svg'
 import PropTypes from 'prop-types'
-import {Chips} from 'monday-ui-react-core'
+import { Chips } from 'monday-ui-react-core'
+import {updateUrgencyAction, updateStatusAction} from "../../actions/todoList-actions";
 
-const TodoItem = ({
+export default function TodoItemComponent ({
   id,
   todo,
   status,
-  updateStatus,
   urgency,
-  updateUrgency,
   selectedArray,
   handleDeleteTodo
-}) => {
+}){
   const selectedStatus = status ? [{ value: status, label: status }] : []
   const selectedUrgency = urgency ? [{ value: urgency, label: urgency }] : []
   const onStatusChange = (event) => {
-    updateStatus(id, event.value)
+    updateStatusAction(id, event.value)
   }
   const onUrgencyChange = (event) => {
-    updateUrgency(id, event.value)
+    updateUrgencyAction(id, event.value)
   }
 
   const onCheckboxChange = (event) => {
@@ -80,9 +79,7 @@ const TodoItem = ({
   )
 }
 
-export default TodoItem
-
-TodoItem.propTypes = {
+TodoItemComponent.propTypes = {
   id: PropTypes.number.isRequired,
   todo: PropTypes.string.isRequired,
   status: PropTypes.string,

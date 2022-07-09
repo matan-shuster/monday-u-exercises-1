@@ -1,8 +1,8 @@
 // Create an ItemClient class here. This is what makes requests to your express server (your own custom API!)
 
 const apiUrl = 'http://localhost:3000/todos'
-export default class item_client {
-  async getTodos() {
+export default class ItemClient {
+  async getTodoList() {
     try {
       const response = await fetch(`${apiUrl}`)
       const data = await response.json()

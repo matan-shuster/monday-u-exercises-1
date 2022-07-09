@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import styles from './listHeader.module.css'
 import PropTypes from 'prop-types'
 
-const ListHeader = ({ onTodoAdd, onDeleteAll }) => {
+export const ListHeaderComponent = ({ addTodo, clearTodoList }) => {
   const [todo, setTodo] = useState('')
   const onChangeInput = (event) => {
     setTodo(event.target.value)
@@ -20,19 +20,22 @@ const ListHeader = ({ onTodoAdd, onDeleteAll }) => {
       <button
         id="addTodo"
         className={styles.addTodo}
-        onClick={() => onTodoAdd(todo)}>
+        onClick={() => addTodo(todo)}>
         Add
       </button>
-      <button id="deleteAll" className={styles.deleteAll} onClick={onDeleteAll}>
+      <button
+        id="deleteAll"
+        className={styles.deleteAll}
+        onClick={clearTodoList}>
         Delete All
       </button>
     </div>
   )
 }
 
-export default ListHeader
+export default ListHeaderComponent
 
-ListHeader.propTypes = {
-  onTodoAdd: PropTypes.func.isRequired,
-  onDeleteAll: PropTypes.func.isRequired
+ListHeaderComponent.propTypes = {
+  addTodo: PropTypes.func.isRequired,
+  clearTodoList: PropTypes.func.isRequired
 }

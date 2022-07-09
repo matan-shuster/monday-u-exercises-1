@@ -1,11 +1,11 @@
 import './App.css'
-import TodoList from './Components/TodoList/TodoList'
+import TodoListConnector from "./Components/TodoList/TodoList-connector";
 
 function App() {
   return (
     <div className="todo">
       <h1>A good list</h1>
-      <TodoList />
+      <TodoListConnector />
     </div>
   )
 }
