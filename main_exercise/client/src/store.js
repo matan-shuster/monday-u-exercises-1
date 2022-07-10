@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
-import { todoListReducer } from './reducers/todoList-reducer'
+import allReducers from "./reducers";
 
 export const store = configureStore({
-  reducer: todoListReducer,
+  reducer: allReducers,
   middleware: [thunkMiddleware],
   preloadedState: {}
 })
+

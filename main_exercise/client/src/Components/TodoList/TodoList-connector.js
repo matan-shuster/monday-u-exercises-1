@@ -17,13 +17,12 @@ import TodoListComponent from './TodoListComponent'
 
 const mapStateToProps = (state, ownProps) => {
   const todoList = getTodoList(state)
-  console.log('todoList', todoList)
-    const filteredTodoList = getFilteredTodoList(state)
-    return {
-        todoList,
-        filteredTodoList
-    }
-};
+  const filteredTodoList = getFilteredTodoList(state)
+  return {
+    todoList,
+    filteredTodoList
+  }
+}
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {

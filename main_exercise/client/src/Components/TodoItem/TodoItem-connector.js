@@ -7,7 +7,8 @@ import {
 
 import todoItemComponent from './todoItemComponent'
 
-const mapDispatchToProps = dispatch => {
+
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       updateStatusAction,

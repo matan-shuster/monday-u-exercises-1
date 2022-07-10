@@ -4,7 +4,6 @@ const { Todo } = require('../db/models')
 
 // import PokemonClient from "../clients/pokemon_client.js";
 const PokemonClient = require('../clients/pokemon_client.js')
-const { writeFileSync, readFileSync } = require('fs')
 
 class ItemManager {
   // Constructor

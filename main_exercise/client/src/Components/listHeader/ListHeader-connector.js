@@ -9,8 +9,8 @@ import ListHeaderComponent from './listHeaderComponent'
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
-      addTodo: addTodoAction,
-      clearTodoList: clearTodoListAction
+      addTodoAction: addTodoAction,
+      clearTodoListAction: clearTodoListAction
     },
     dispatch
   )
