@@ -2,7 +2,7 @@ import { useState } from 'react'
 import styles from './listHeader.module.css'
 import PropTypes from 'prop-types'
 
-export const ListHeaderComponent = ({ addTodo, clearTodoList }) => {
+export const ListHeaderComponent = ({ addTodoAction, clearTodoListAction }) => {
   const [todo, setTodo] = useState('')
   const onChangeInput = (event) => {
     setTodo(event.target.value)
@@ -20,13 +20,13 @@ export const ListHeaderComponent = ({ addTodo, clearTodoList }) => {
       <button
         id="addTodo"
         className={styles.addTodo}
-        onClick={() => addTodo(todo)}>
+        onClick={() => addTodoAction(todo)}>
         Add
       </button>
       <button
         id="deleteAll"
         className={styles.deleteAll}
-        onClick={clearTodoList}>
+        onClick={clearTodoListAction}>
         Delete All
       </button>
     </div>
@@ -36,6 +36,6 @@ export const ListHeaderComponent = ({ addTodo, clearTodoList }) => {
 export default ListHeaderComponent
 
 ListHeaderComponent.propTypes = {
-  addTodo: PropTypes.func.isRequired,
-  clearTodoList: PropTypes.func.isRequired
+  addTodoAction: PropTypes.func.isRequired,
+  clearTodoListAction: PropTypes.func.isRequired
 }

@@ -7,3 +7,4 @@ export const store = configureStore({
   middleware: [thunkMiddleware],
   preloadedState: {}
 })
+

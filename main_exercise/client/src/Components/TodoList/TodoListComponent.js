@@ -38,7 +38,9 @@ export default function TodoListComponent({
   // }
   async function initialTodos() {
     try {
-      setTodos(todoList)
+      if (todoList){
+        setTodos(todoList)
+      }
     } catch (e) {
       setIsLoading(false)
       console.log(e)
@@ -93,7 +95,6 @@ export default function TodoListComponent({
 
   return (
     <div>
-      <ListHeaderConnector />
       <section className={styles.todoListContainer}>
         {isLoading ? <Loader /> : null}
         {todos.map((todo) => {
