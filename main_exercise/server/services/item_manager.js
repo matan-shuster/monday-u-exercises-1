@@ -1,15 +1,11 @@
 // The ItemManager should go here. Remember that you have to export it.
 
 const { Todo } = require('../db/models')
-
-// import PokemonClient from "../clients/pokemon_client.js";
 const PokemonClient = require('../clients/pokemon_client.js')
-const { writeFileSync, readFileSync } = require('fs')
 
 class ItemManager {
   // Constructor
   constructor() {
-    this.history = []
     this.pokemonClient = new PokemonClient()
     this.todoList = this.getTodoList() || []
   }
@@ -28,12 +24,7 @@ class ItemManager {
   async createTodo(todoObject) {
     const {
       dataValues: { id }
-    } = await Todo.create({
-      todo: todoObject.todo,
-      pokemonID: todoObject.pokemonID,
-      isPokemon: todoObject.isPokemon,
-      status: todoObject.status,
-      urgency: todoObject.urgency
+    } = await Todo.create({...todoObject
     })
     return { todoObject, id }
   }
@@ -106,7 +97,7 @@ class ItemManager {
   async updateStatus(id, status) {
     await Todo.update(
       {
-        status: status
+        status
       },
       {
         where: { id }
@@ -116,7 +107,7 @@ class ItemManager {
   async updateUrgency(id, urgency) {
     await Todo.update(
       {
-        urgency: urgency
+        urgency
       },
       {
         where: { id }

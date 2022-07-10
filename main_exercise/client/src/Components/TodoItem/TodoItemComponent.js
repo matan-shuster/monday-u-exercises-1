@@ -20,6 +20,7 @@ export default function TodoItemComponent ({
     updateStatusAction(id, event.value)
   }
   const onUrgencyChange = (event) => {
+
     updateUrgencyAction(id, event.value)
   }
 
