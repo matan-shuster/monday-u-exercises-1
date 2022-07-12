@@ -7,12 +7,8 @@ import {
 
 import todoItemComponent from './todoItemComponent'
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        ...ownProps
-    }
-}
-const mapDispatchToProps = dispatch => {
+
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       updateStatusAction,
@@ -22,4 +18,4 @@ const mapDispatchToProps = dispatch => {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(todoItemComponent)
+export default connect(null, mapDispatchToProps)(todoItemComponent)

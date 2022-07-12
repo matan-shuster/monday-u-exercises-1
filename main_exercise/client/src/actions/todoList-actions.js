@@ -57,8 +57,9 @@ export const clearTodoListAction = () => async (dispatch) => {
   dispatch({type: "CLEAR_TODO_LIST"})
 }
 
-export const addTodoAction = (text) => async (dispatch) => {
-  const renderedTodo = await itemClient.addTodo(text)
+export const addTodoAction = (todo) => async (dispatch) => {
+  const renderedTodo = await itemClient.addTodo(todo)
+  console.log(renderedTodo)
   dispatch({type: "ADD_TODO", payload: renderedTodo})
 }
 

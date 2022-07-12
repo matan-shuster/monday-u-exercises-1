@@ -15,7 +15,7 @@ export const todoListReducer = (state = initialState, action) => {
     case actionTypes.ADD_TODO:
       return {
         ...state,
-        todoList: [...state.todoList, action.payload]
+        todoList: [...state.todoList, ...action.payload]
       }
     case actionTypes.FILTER_TODO_LIST:
       return {
