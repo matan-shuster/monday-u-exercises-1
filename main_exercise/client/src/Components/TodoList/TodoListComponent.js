@@ -2,44 +2,39 @@ import { useEffect, useState } from 'react'
 import styles from './TodoList.module.css'
 import TodoItemComponent from '../TodoItem/TodoItemComponent'
 import Loader from '../Loader/Loader'
-import { deleteSelectedAction } from '../../actions/todoList-actions'
+import FilterComponent from "../Filter/FilterComponent";
 
 export default function TodoListComponent({
-  filterTodoList,
+    filterTodoList,
   todoList,
   filteredTodoList,
     getTodoList,
+    updateStatus,
+    updateUrgency,
+    deleteTodo,
+    deleteSelected,
 }) {
   const selectedArray = []
   const [todos, setTodos] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    try {
-      if (todoList) {
-        setTodos(todoList)
+      if (filteredTodoList.length > 0) {
+        setTodos(filteredTodoList)
       }
       else{
-        setTodos([])
+        setTodos(todoList)
       }
-    } catch (e) {
-      console.log(e)
-    }
-  }, [todoList])
+
+  }, [todoList,filteredTodoList])
 
   useEffect(() => {
       getTodoList();
   }, [])
 
-  const handleDeleteSelected = async () => {
-    try {
-      deleteSelectedAction(selectedArray)
-      setTodos(todos.filter((todo) => !selectedArray.includes(todo.id)))
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
+    function handleDeleteSelected() {
+        deleteSelected(selectedArray)
+    };
   return (
     <div>
       <section className={styles.todoListContainer}>
@@ -50,6 +45,9 @@ export default function TodoListComponent({
               key={todo.id}
               {...todo}
               selectedArray={selectedArray}
+              updateStatusAction={updateStatus}
+              updateUrgencyAction={updateUrgency}
+              handleDeleteTodo={deleteTodo}
             />
           )
         })}
@@ -60,6 +58,7 @@ export default function TodoListComponent({
         onClick={handleDeleteSelected}>
         Delete Selected
       </button>
+        <FilterComponent filter={"All"} handleFilterChange={filterTodoList} />
     </div>
   )
 }

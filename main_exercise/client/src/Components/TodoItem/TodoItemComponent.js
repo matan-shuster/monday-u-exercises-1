@@ -5,24 +5,31 @@ import deleteIcon from '../../assets/delete_icon.svg'
 import PropTypes from 'prop-types'
 import { Chips } from 'monday-ui-react-core'
 
-export default function TodoItemComponent ({
+export default function TodoItemComponent({
   id,
   todo,
   status,
   urgency,
   selectedArray,
   handleDeleteTodo,
-    updateUrgencyAction,
-    updateStatusAction
-}){
+  updateUrgencyAction,
+  updateStatusAction
+}) {
   const selectedStatus = status ? [{ value: status, label: status }] : []
   const selectedUrgency = urgency ? [{ value: urgency, label: urgency }] : []
   const onStatusChange = (event) => {
-    updateStatusAction(id, event.value)
+    if (event) {
+      updateStatusAction(id, event.value)
+    } else {
+      updateStatusAction(id, null)
+    }
   }
   const onUrgencyChange = (event) => {
-
-    updateUrgencyAction(id, event.value)
+    if (event) {
+      updateUrgencyAction(id, event.value)
+    } else {
+      updateUrgencyAction(id, null)
+    }
   }
 
   const onCheckboxChange = (event) => {
@@ -87,5 +94,5 @@ TodoItemComponent.propTypes = {
   status: PropTypes.string,
   urgency: PropTypes.string,
   selectedArray: PropTypes.array.isRequired,
-  handleDeleteTodo: PropTypes.func.isRequired
+  handleDeleteTodo: PropTypes.func
 }

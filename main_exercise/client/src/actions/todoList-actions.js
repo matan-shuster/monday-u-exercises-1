@@ -48,6 +48,7 @@ const itemClient= new ItemClient()
 //   payload: filter
 // })
 
+
 export const getTodoListAction = () => async (dispatch) => {
   const todoList = await itemClient.getTodoList()
   dispatch({type: "GET_TODO_LIST", payload: todoList})
@@ -59,7 +60,6 @@ export const clearTodoListAction = () => async (dispatch) => {
 
 export const addTodoAction = (todo) => async (dispatch) => {
   const renderedTodo = await itemClient.addTodo(todo)
-  console.log(renderedTodo)
   dispatch({type: "ADD_TODO", payload: renderedTodo})
 }
 
@@ -83,6 +83,6 @@ export const deleteSelectedAction = (selectedArray) => async (dispatch) => {
   dispatch({type: "DELETE_SELECTED", payload: selectedArray})
 }
 
-export const filterTodoListAction = (filter) => async (dispatch) => {
-  dispatch({type: "FILTER_TODO_LIST", payload: filter})
+export const filterTodoListAction = (filterStatus,filterUrgency) => async (dispatch) => {
+  dispatch({type: "FILTER_TODO_LIST", payload: filterStatus, filterUrgency})
 }

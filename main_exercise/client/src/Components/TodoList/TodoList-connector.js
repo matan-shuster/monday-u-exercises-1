@@ -10,7 +10,7 @@ import {
   deleteSelectedAction,
   deleteTodoAction,
   filterTodoListAction,
-  getTodoListAction
+  getTodoListAction, updateStatusAction, updateUrgencyAction
 } from '../../actions/todoList-actions'
 
 import TodoListComponent from './TodoListComponent'
@@ -30,8 +30,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     addTodo: bindActionCreators(addTodoAction, dispatch),
     clearTodoList: bindActionCreators(clearTodoListAction, dispatch),
     deleteSelected: bindActionCreators(deleteSelectedAction, dispatch),
-    deleteTodo: bindActionCreators(deleteTodoAction, dispatch),
-    filterTodoList: bindActionCreators(filterTodoListAction, dispatch)
+    filterTodoList: bindActionCreators(filterTodoListAction, dispatch),
+    updateStatus: bindActionCreators(updateStatusAction, dispatch),
+    updateUrgency: bindActionCreators(updateUrgencyAction, dispatch),
+    deleteTodo: bindActionCreators(deleteTodoAction, dispatch)
   }
 }
 

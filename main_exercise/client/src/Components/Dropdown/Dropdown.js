@@ -22,7 +22,6 @@ const DropdownComponent = ({
       placeholder={label}
       labelRenderer={labelRenderer}
       optionRenderer={labelRenderer}
-      clearable={false}
       searchable={false}
     />
   )
