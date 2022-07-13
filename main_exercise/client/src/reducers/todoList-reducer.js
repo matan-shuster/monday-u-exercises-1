@@ -21,7 +21,7 @@ export const todoListReducer = (state = initialState, action) => {
       return {
         ...state,
         filteredTodoList: state.todoList.filter(
-          (todo) => todo.status === action.payload || todo.urgency === action.payload
+          (todo) => todo.status === action.payload
         )
       }
     case actionTypes.DELETE_TODO:

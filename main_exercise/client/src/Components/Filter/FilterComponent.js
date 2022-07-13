@@ -1,5 +1,5 @@
-import { Chips } from 'monday-ui-react-core'
 import DropdownComponent from "../Dropdown/Dropdown";
+import styles from './FilterComponent.module.css'
 
 const FilterComponent = ({
     filter,
@@ -16,8 +16,8 @@ const FilterComponent = ({
         }
     }
     return (
-        <div className="filter">
-            Filter Status:
+        <div className={styles.filter}>
+           <span className={styles.text}>Filter Status:</span>
             <DropdownComponent
                 options={[
                     { value: 'All', label: 'All' },
@@ -28,15 +28,6 @@ const FilterComponent = ({
                 selectedValue={selectedFilter}
                 label="Filter"
             />
-            Filter Urgency:
-            <DropdownComponent onChangeHandler={onFilterChange} label={"Filter"} selectedValue={selectedFilter} options={
-                [
-                    { value: 'All', label: 'All' },
-                    { value: 'Low', label: 'Low' },
-                    { value: 'Medium', label: 'Medium' },
-                    { value: 'High', label: 'High' },
-                    { value: 'Critical', label: 'Critical' },
-                    ]}/>
         </div>
     )
 }

@@ -24,13 +24,16 @@ class ItemManager {
   async createTodo(todoObject) {
     const {
       dataValues: { id }
-    } = await Todo.create({...todoObject
+    } = await Todo.create({
+      ...todoObject
     })
     return { todoObject, id }
   }
+
   async addTodo(todo) {
     const splitList = todo.split(',')
     const renderedTodos = []
+
     if (this.checkNumbers(splitList)) {
       const pokemonIDArray = splitList
       const pokemonNameArray = await this.pokemonClient.getPokemons(
@@ -76,18 +79,15 @@ class ItemManager {
       where: { id }
     })
   }
+
   async deleteSelected(idArray) {
-    idArray.forEach((element) => {
-      try {
-        Todo.destroy({
-          where: { id: element }
-        })
-      } catch (e) {
-        console.log(e)
-      }
+    await Todo.destroy({
+      where: { id: idArray }
     })
   }
+
   ש
+
   async clearTodoList() {
     await Todo.destroy({
       where: {}
@@ -104,6 +104,7 @@ class ItemManager {
       }
     )
   }
+
   async updateUrgency(id, urgency) {
     await Todo.update(
       {

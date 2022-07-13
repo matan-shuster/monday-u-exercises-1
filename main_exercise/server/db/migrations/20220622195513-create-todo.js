@@ -20,6 +20,9 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
+      urgency: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

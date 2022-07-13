@@ -14,26 +14,28 @@ export default function TodoListComponent({
     deleteTodo,
     deleteSelected,
 }) {
-  const selectedArray = []
+  const selectedCheckboxArray = []
   const [todos, setTodos] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+      setIsLoading(true)
       if (filteredTodoList.length > 0) {
         setTodos(filteredTodoList)
       }
       else{
         setTodos(todoList)
       }
-
+      setIsLoading(false)
   }, [todoList,filteredTodoList])
 
   useEffect(() => {
+      setIsLoading(true)
       getTodoList();
   }, [])
 
     function handleDeleteSelected() {
-        deleteSelected(selectedArray)
+        deleteSelected(selectedCheckboxArray)
     };
   return (
     <div>
@@ -44,7 +46,7 @@ export default function TodoListComponent({
             <TodoItemComponent
               key={todo.id}
               {...todo}
-              selectedArray={selectedArray}
+              selectedArray={selectedCheckboxArray}
               updateStatusAction={updateStatus}
               updateUrgencyAction={updateUrgency}
               handleDeleteTodo={deleteTodo}

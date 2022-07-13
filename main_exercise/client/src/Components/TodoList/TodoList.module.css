@@ -3,6 +3,7 @@
   flex-direction: column;
   border: 8px solid #03afd2;
   border-radius: 10px;
+  padding:10px;
 }
 
 .deleteSelected {
