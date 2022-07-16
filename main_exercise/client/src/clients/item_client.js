@@ -1,15 +1,10 @@
 // Create an ItemClient class here. This is what makes requests to your express server (your own custom API!)
 
 const apiUrl = 'http://localhost:3000/todos'
-export default class item_client {
-  async getTodos() {
-    try {
+export default class ItemClient {
+  async getTodoList() {
       const response = await fetch(`${apiUrl}`)
-      const data = await response.json()
-      return data
-    } catch (e) {
-      console.log(e)
-    }
+      return await response.json()
   }
 
   addTodo(todo) {
@@ -19,7 +14,7 @@ export default class item_client {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((res) => res.json())
+    }).then(res => res.json())
   }
 
   updateStatus(id, status) {
@@ -32,7 +27,7 @@ export default class item_client {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((res) => res.json())
+    }).then(res => res.status)
   }
 
   updateUrgency(id, urgency) {
@@ -45,17 +40,18 @@ export default class item_client {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((res) => res.json())
+    }).then(res => res.status)
   }
 
   async deleteSelected(selectedArray) {
+    console.log(selectedArray)
     await fetch(`${apiUrl}/selected`, {
       method: 'DELETE',
       body: JSON.stringify({ selectedArray }),
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((res) => res.json())
+    }).then(res => res.status)
   }
   async deleteTodo(id) {
     await fetch(`${apiUrl}/${id}`, {
@@ -64,12 +60,12 @@ export default class item_client {
       headers: {
         'Content-Type': 'application/json'
       }
-    }).then((res) => res.json())
+    }).then(res => res.status)
   }
 
   async clearTodoList() {
     await fetch(`${apiUrl}`, {
       method: 'DELETE'
-    })
+    }).then(res => res.status)
   }
 }

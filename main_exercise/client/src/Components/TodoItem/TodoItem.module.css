@@ -3,9 +3,11 @@
   flex-direction: row;
   align-items: center;
   border: 1px solid #03afd2;
+    width: 45em;
 }
 .text {
   flex: 1;
+  text-overflow: clip;
 }
 
 .deleteIcon {

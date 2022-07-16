@@ -1,27 +1,42 @@
 import styles from './TodoItem.module.css'
-import DropdownComponent from '../Dropdown/Dropdown'
 import CheckboxComponent from '../Checkbox/Checkbox'
 import deleteIcon from '../../assets/delete_icon.svg'
 import PropTypes from 'prop-types'
-import {Chips} from 'monday-ui-react-core'
+import { Chips } from 'monday-ui-react-core'
+import { useMemo } from 'react'
+import DropdownConnector from "../Dropdown/DropdownConnector";
 
-const TodoItem = ({
+export default function TodoItemComponent({
   id,
   todo,
   status,
-  updateStatus,
   urgency,
-  updateUrgency,
   selectedArray,
-  handleDeleteTodo
-}) => {
-  const selectedStatus = status ? [{ value: status, label: status }] : []
-  const selectedUrgency = urgency ? [{ value: urgency, label: urgency }] : []
+  deleteTodo,
+  updateUrgency,
+  updateStatus
+}) {
+  const selectedStatus = useMemo(
+    () => (status ? [{ value: status, label: status }] : []),
+    [status]
+  )
+  const selectedUrgency = useMemo(
+    () => (urgency ? [{ value: urgency, label: urgency }] : []),
+    [urgency]
+  )
   const onStatusChange = (event) => {
-    updateStatus(id, event.value)
+    if (event) {
+      updateStatus(id, event.value)
+    } else {
+      updateStatus(id, null)
+    }
   }
   const onUrgencyChange = (event) => {
-    updateUrgency(id, event.value)
+    if (event) {
+      updateUrgency(id, event.value)
+    } else {
+      updateUrgency(id, null)
+    }
   }
 
   const onCheckboxChange = (event) => {
@@ -32,14 +47,14 @@ const TodoItem = ({
     }
   }
   const onDeleteTodo = () => {
-    handleDeleteTodo(id)
+    deleteTodo(id)
   }
 
   return (
     <div className={styles.todo}>
       <CheckboxComponent onChangeHandler={onCheckboxChange} />
       <span className={styles.text}>{todo}</span>
-      <DropdownComponent
+      <DropdownConnector
         options={[
           {
             value: 'In Progress',
@@ -52,7 +67,7 @@ const TodoItem = ({
         selectedValue={selectedStatus}
         label="Status"
       />
-      <DropdownComponent
+      <DropdownConnector
         options={[
           {
             value: 'Critical',
@@ -80,15 +95,11 @@ const TodoItem = ({
   )
 }
 
-export default TodoItem
-
-TodoItem.propTypes = {
+TodoItemComponent.propTypes = {
   id: PropTypes.number.isRequired,
   todo: PropTypes.string.isRequired,
   status: PropTypes.string,
-  updateStatus: PropTypes.func.isRequired,
   urgency: PropTypes.string,
-  updateUrgency: PropTypes.func.isRequired,
   selectedArray: PropTypes.array.isRequired,
-  handleDeleteTodo: PropTypes.func.isRequired
+  deleteTodo: PropTypes.func
 }

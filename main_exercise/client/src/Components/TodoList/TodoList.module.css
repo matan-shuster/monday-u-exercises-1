@@ -3,6 +3,7 @@
   flex-direction: column;
   border: 8px solid #03afd2;
   border-radius: 10px;
+  padding:10px;
 }
 
 .deleteSelected {
@@ -28,4 +29,22 @@
   box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
   color: #fff;
   transform: translateY(-7px);
+}
+
+.filter{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+
+}
+
+.filter{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+
 }
