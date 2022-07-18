@@ -1,5 +1,7 @@
-import renderer from 'react-test-renderer';
+import {render} from "@testing-library/react";
 import TodoItemComponent from "../TodoItemComponent";
+import {Provider} from "react-redux";
+import {store} from "../../../store";
 
 const props = {
     id: 1,
@@ -12,6 +14,9 @@ const props = {
     updateUrgency: jest.fn(),
 }
 it('renders correctly', () => {
-    const tree = renderer.create(<TodoItemComponent {...props} />).toJSON();
+    const tree = render(
+        <Provider store={store}>
+            <TodoItemComponent {...props} />).toJSON();
+        </Provider>)
     expect(tree).toMatchSnapshot();
 });
