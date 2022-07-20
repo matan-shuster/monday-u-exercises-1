@@ -10,12 +10,9 @@ Object {
           class="todoListContainer"
         >
           <div
-            class="spinner-container"
-          >
-            <div
-              class="loadingSpinner"
-            />
-          </div>
+            class="loadingSpinner"
+            id="loader"
+          />
           <div
             class="todo"
           >
@@ -511,12 +508,9 @@ Object {
         class="todoListContainer"
       >
         <div
-          class="spinner-container"
-        >
-          <div
-            class="loadingSpinner"
-          />
-        </div>
+          class="loadingSpinner"
+          id="loader"
+        />
         <div
           class="todo"
         >

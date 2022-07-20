@@ -4,7 +4,7 @@ import deleteIcon from '../../assets/delete_icon.svg'
 import PropTypes from 'prop-types'
 import { Chips } from 'monday-ui-react-core'
 import { useMemo } from 'react'
-import DropdownConnector from "../Dropdown/DropdownConnector";
+import DropdownComponent from "../Dropdown/Dropdown";
 
 export default function TodoItemComponent({
   id,
@@ -51,10 +51,10 @@ export default function TodoItemComponent({
   }
 
   return (
-    <div className={styles.todo}>
+    <div className={styles.todo} id={todo.id}>
       <CheckboxComponent onChangeHandler={onCheckboxChange} />
       <span className={styles.text}>{todo}</span>
-      <DropdownConnector
+      <DropdownComponent
         options={[
           {
             value: 'In Progress',
@@ -67,7 +67,7 @@ export default function TodoItemComponent({
         selectedValue={selectedStatus}
         label="Status"
       />
-      <DropdownConnector
+      <DropdownComponent
         options={[
           {
             value: 'Critical',
