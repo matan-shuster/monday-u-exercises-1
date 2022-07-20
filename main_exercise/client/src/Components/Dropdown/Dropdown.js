@@ -23,6 +23,7 @@ const DropdownComponent = ({
       labelRenderer={labelRenderer}
       optionRenderer={labelRenderer}
       searchable={false}
+      id={label}
     />
   )
 }

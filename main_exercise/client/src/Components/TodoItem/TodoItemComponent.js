@@ -90,6 +90,7 @@ export default function TodoItemComponent({
         src={deleteIcon}
         className={styles.deleteIcon}
         onClick={onDeleteTodo}
+        id="deleteTodo"
       />
     </div>
   )

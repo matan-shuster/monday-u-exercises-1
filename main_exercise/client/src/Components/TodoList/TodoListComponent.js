@@ -42,7 +42,7 @@ export default function TodoListComponent({
     }
     return (
         <div>
-            <section className={styles.todoListContainer}>
+            <section className={styles.todoListContainer} id="todoList">
                 {isLoading ? <Loader /> : null}
                 {mapTodos}
             </section>
