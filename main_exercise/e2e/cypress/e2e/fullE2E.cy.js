@@ -51,7 +51,7 @@ describe("Should delete a todo", () => {
 describe("Should change status of a todo", () => {
     it("Should change status of Ivysaur", () => {
         cy.get('#todoList').contains("Ivysaur").parent().within(() => {
-            cy.get('#Status').click().children().contains("Done").click();
+            cy.get('#Status').click().children().get(".Done").click();
         });
 
         cy.get('#todoList').contains("Ivysaur").parent().within(() => {
@@ -60,15 +60,15 @@ describe("Should change status of a todo", () => {
     });
     //Change Bulbasaur to In Progress
     // TODO - Add a test to change Bulbasaur to In Progress
-    // it("Should change status of Bulbasaur", () => {
-    //     cy.get('#todoList').contains("Bulbasaur").parent().within(() => {
-    //         cy.get('#Status').click().children().contains("In Progress").click();
-    //     });
-    //
-    //     cy.get('#todoList').contains("Bulbasaur").parent().within(() => {
-    //         cy.get('#Status').children().should("contain", "In Progress");
-    //     });
-    // });
+    it("Should change status of Bulbasaur", () => {
+        cy.get('#todoList').contains("Bulbasaur").parent().within(() => {
+            cy.get('#Status').click().children().get('.In Progress').click();
+        });
+
+        cy.get('#todoList').contains("Bulbasaur").parent().within(() => {
+            cy.get('#Status').children().should("contain", "In Progress");
+        });
+    });
 });
 
 describe("Should change urgency of a todo", () => {
@@ -98,7 +98,7 @@ describe("Should change urgency of a todo", () => {
 describe('Should delete selected', function () {
     it("Should delete selected", () => {
         cy.get('#todoList').contains("Venusaur").parent().within(() => {
-            cy.get('#checkbox').check({force: true});
+            cy.get("[type=checkbox]").check({force: true});
         });
         cy.get('#deleteSelected').click();
     });
@@ -110,7 +110,6 @@ describe("Filter todos", () => {
     it("Should filter todos by status",() => {
         cy.get('#Filter').click();
         cy.get('#Filter').children().contains("Done").click();
-
         cy.get("#todoList").children().should("have.length", 1);
     });
 });

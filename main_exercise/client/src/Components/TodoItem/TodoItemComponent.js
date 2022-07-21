@@ -52,7 +52,7 @@ export default function TodoItemComponent({
 
   return (
     <div className={styles.todo} id={todo.id}>
-      <CheckboxComponent onChangeHandler={onCheckboxChange} />
+      <CheckboxComponent onChangeHandler={onCheckboxChange} id={todo.id} />
       <span className={styles.text}>{todo}</span>
       <DropdownComponent
         options={[
