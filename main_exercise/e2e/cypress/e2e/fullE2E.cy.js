@@ -62,7 +62,7 @@ describe("Should change status of a todo", () => {
     // TODO - Add a test to change Bulbasaur to In Progress
     it("Should change status of Bulbasaur", () => {
         cy.get('#todoList').contains("Bulbasaur").parent().within(() => {
-            cy.get('#Status').click().children().get('.In Progress').click();
+            cy.get('#Status').click().children().get('.In.Progress').click();
         });
 
         cy.get('#todoList').contains("Bulbasaur").parent().within(() => {
