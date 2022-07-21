@@ -76,7 +76,7 @@ describe("Should change urgency of a todo", () => {
     it("Should change urgency of Ivysaur", () => {
         //Change Ivysaur to high urgency
         cy.get('#todoList').contains("Ivysaur").parent().within(() => {
-            cy.get('#Urgency').click().children().contains("High").click();
+            cy.get('#Urgency').click().children().get(".High").click();
         });
 
         cy.get('#todoList').contains("Ivysaur").parent().within(() => {
@@ -86,7 +86,7 @@ describe("Should change urgency of a todo", () => {
         it("Should change urgency of Bulbasaur", () => {
         //Change Bulbasaur to low urgency
         cy.get('#todoList').contains("Bulbasaur").parent().within(() => {
-            cy.get('#Urgency').click().children().contains("Low").click();
+            cy.get('#Urgency').click().children().get(".Low").click();
         });
         cy.get('#todoList').contains("Bulbasaur").parent().within(() => {
             cy.get('#Urgency').children().should("contain", "Low");
