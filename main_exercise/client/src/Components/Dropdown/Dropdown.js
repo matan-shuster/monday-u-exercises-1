@@ -11,7 +11,7 @@ const DropdownComponent = ({
   onChangeHandler
 }) => {
   const labelRenderer = useCallback(({ label, color }) => {
-    return <Chips label={label} color={color} isAnimationDisabled />
+    return <Chips className={label} label={label} color={color} isAnimationDisabled />
   })
   return (
     <Dropdown
@@ -23,6 +23,7 @@ const DropdownComponent = ({
       labelRenderer={labelRenderer}
       optionRenderer={labelRenderer}
       searchable={false}
+      id={label}
     />
   )
 }

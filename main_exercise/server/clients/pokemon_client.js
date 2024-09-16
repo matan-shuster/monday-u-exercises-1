@@ -16,7 +16,7 @@ class PokemonClient {
   }
 
   async getPokemons(pokemonIDArray) {
-    let pokemons = []
+    const pokemons = []
     let count = 0
     try {
       await Promise.all(

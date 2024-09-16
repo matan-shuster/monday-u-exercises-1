@@ -1,5 +1,5 @@
 import styles from './FilterComponent.module.css'
-import DropdownConnector from "../Dropdown/DropdownConnector";
+import DropdownComponent from "../Dropdown/Dropdown";
 
 const FilterComponent = ({
     filter,
@@ -18,7 +18,7 @@ const FilterComponent = ({
     return (
         <div className={styles.filter}>
            <span className={styles.text}>Filter Status:</span>
-            <DropdownConnector
+            <DropdownComponent
                 options={[
                     { value: 'All', label: 'All' },
                     { value: 'In Progress', label: 'In Progress' },

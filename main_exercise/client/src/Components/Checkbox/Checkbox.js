@@ -1,7 +1,7 @@
 import { Checkbox } from 'monday-ui-react-core'
 import styles from './Checkbox.module.css'
 import PropTypes from 'prop-types'
-const CheckboxComponent = ({ onChangeHandler }) => {
+const CheckboxComponent = ({ onChangeHandler}) => {
   return <Checkbox className={styles.checkbox} onChange={onChangeHandler} />
 }
 

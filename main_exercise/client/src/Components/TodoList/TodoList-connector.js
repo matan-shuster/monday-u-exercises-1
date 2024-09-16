@@ -31,9 +31,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     clearTodoList: bindActionCreators(clearTodoListAction, dispatch),
     deleteSelected: bindActionCreators(deleteSelectedAction, dispatch),
     filterTodoList: bindActionCreators(filterTodoListAction, dispatch),
-    updateStatus: bindActionCreators(updateStatusAction, dispatch),
-    updateUrgency: bindActionCreators(updateUrgencyAction, dispatch),
-    deleteTodo: bindActionCreators(deleteTodoAction, dispatch)
   }
 }
 
